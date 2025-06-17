@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    image: rohitpatil2004/frontend:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+    image: rohitpatil2004/backend:latest
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
